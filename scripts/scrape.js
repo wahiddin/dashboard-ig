@@ -7,7 +7,7 @@ const yaml = require("js-yaml");
 
 const APIFY_TOKEN = process.env.APIFY_TOKEN;
 if (!APIFY_TOKEN) {
-  console.error("apify_api_vXDCvwCARp33Q4GX0lOs47AoRslgDj2jll5b");
+  console.error("APIFY_TOKEN belum di-set sebagai GitHub Secret.");
   process.exit(1);
 }
 
@@ -88,7 +88,7 @@ function updateHistory(existing, snapshot) {
 }
 
 async function main() {
-  console.log(`Scraping @${dinwahidd} ...`);
+  console.log(`Scraping @${USERNAME} ...`);
 
   let existing = null;
   if (fs.existsSync(DATA_PATH)) {
