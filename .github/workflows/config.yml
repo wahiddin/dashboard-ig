@@ -1,0 +1,13 @@
+# ============================================
+#  KONFIGURASI DASHBOARD
+#  Ini satu-satunya file yang perlu kamu ubah.
+# ============================================
+
+# Username Instagram yang mau dipantau (tanpa @)
+instagram_username: "dinwahidd"
+
+# Berapa post terakhir yang mau ditarik & ditampilkan di dashboard
+posts_limit: 24
+
+# Nama akun yang tampil di judul dashboard (boleh beda dari username IG)
+display_name: "IG: Dindin Wahidin"
