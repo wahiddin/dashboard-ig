@@ -1,0 +1,9 @@
+{
+  "name": "instagram-analytics-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dashboard analitik Instagram dengan auto-scrape via Apify + GitHub Actions.",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
