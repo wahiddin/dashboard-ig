@@ -1,0 +1,27 @@
+{
+  "username": "insandesain.id",
+  "display_name": "Insan Desain",
+  "profile_pic": "",
+  "bio": "Contoh data — akan tertimpa otomatis setelah scrape pertama jalan.",
+  "followers": 12480,
+  "following": 210,
+  "posts_count": 6,
+  "last_updated": "2026-07-16T00:00:00.000Z",
+  "history": [
+    { "date": "2026-07-10", "followers": 12180, "posts_count": 6 },
+    { "date": "2026-07-11", "followers": 12225, "posts_count": 6 },
+    { "date": "2026-07-12", "followers": 12290, "posts_count": 6 },
+    { "date": "2026-07-13", "followers": 12340, "posts_count": 6 },
+    { "date": "2026-07-14", "followers": 12390, "posts_count": 6 },
+    { "date": "2026-07-15", "followers": 12430, "posts_count": 6 },
+    { "date": "2026-07-16", "followers": 12480, "posts_count": 6 }
+  ],
+  "posts": [
+    { "id": "1", "url": "#", "thumbnail": "", "caption": "Contoh post 1 — proses desain produk dari riset sampai wireframe.", "likes": 842, "comments": 34, "timestamp": 1752537600, "type": "Image" },
+    { "id": "2", "url": "#", "thumbnail": "", "caption": "Contoh post 2 — perbandingan UI/UX vs riset pasar.", "likes": 611, "comments": 19, "timestamp": 1752451200, "type": "Sidecar" },
+    { "id": "3", "url": "#", "thumbnail": "", "caption": "Contoh post 3 — behind the scenes Kelas Pohon.", "likes": 1204, "comments": 58, "timestamp": 1752364800, "type": "Video" },
+    { "id": "4", "url": "#", "thumbnail": "", "caption": "Contoh post 4.", "likes": 530, "comments": 12, "timestamp": 1752278400, "type": "Image" },
+    { "id": "5", "url": "#", "thumbnail": "", "caption": "Contoh post 5.", "likes": 903, "comments": 27, "timestamp": 1752192000, "type": "Image" },
+    { "id": "6", "url": "#", "thumbnail": "", "caption": "Contoh post 6.", "likes": 445, "comments": 8, "timestamp": 1752105600, "type": "Sidecar" }
+  ]
+}
