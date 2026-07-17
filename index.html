@@ -797,6 +797,14 @@ function isoWeek(ts) {
   return `${d.getFullYear()}-W${String(w).padStart(2,'0')}`;
 }
 function isoMonth(ts) { return ts.slice(0,7); }
+// Normalisasi timestamp apapun bentuknya (ISO datetime penuh, date-only, dll)
+// jadi string 'YYYY-MM-DD' polos, biar konsisten dipakai di seluruh dashboard.
+function toDateOnly(ts) {
+  if (!ts) return null;
+  if (typeof ts === 'string' && /^\d{4}-\d{2}-\d{2}/.test(ts)) return ts.slice(0,10);
+  const d = new Date(ts);
+  return isNaN(d.getTime()) ? null : d.toISOString().slice(0,10);
+}
 function groupBy(arr,fn) { return arr.reduce((acc,p)=>{ const k=fn(p.timestamp); (acc[k]=acc[k]||[]).push(p); return acc; },{}); }
 function avgER(arr,f) { return arr.length ? arr.reduce((s,p)=>s+erPct(p,f),0)/arr.length : 0; }
 function toast(msg,ms=2500) { const el=$("toast"); el.textContent=msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),ms); }
@@ -845,17 +853,35 @@ async function init() {
     const res=await fetch('data/data.json',{cache:'no-store'});
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json=await res.json();
-    const {profile,posts,updatedAt}=json;
 
-    _followers = (profile && profile.followersCount) || 0;
-    _allPosts  = (posts||[])
-      .filter(p=>p && p.id!=='placeholder' && typeof p.timestamp==='string')
+    // Dukung 2 bentuk skema data.json:
+    // (a) baru:  { profile:{followersCount,username,...}, posts:[{likesCount,commentsCount,displayUrl,...}], updatedAt }
+    // (b) lama:  { username, followers, posts:[{likes,comments,thumbnail,...}], last_updated }
+    const profile = json.profile || {
+      username: json.username,
+      displayName: json.display_name,
+      followersCount: json.followers,
+      followingCount: json.following,
+      postsCount: json.posts_count,
+    };
+    const rawPosts   = json.posts || [];
+    const updatedAt  = json.updatedAt || json.last_updated;
+
+    _followers = Number(profile && profile.followersCount) || 0;
+    _allPosts  = rawPosts
+      .filter(p=>p && p.id!=='placeholder' && (p.timestamp))
       .map(p=>({
-        id:p.id, url:p.url||'', displayUrl:p.displayUrl||'',
-        caption:p.caption||'', likesCount:Number(p.likesCount)||0,
-        commentsCount:Number(p.commentsCount)||0, timestamp:p.timestamp,
-        type:p.type||'Image', videoViewCount:p.videoViewCount||null,
-      }));
+        id:p.id,
+        url:p.url||'',
+        displayUrl:p.displayUrl || p.thumbnail || '',
+        caption:p.caption||'',
+        likesCount:Number(p.likesCount ?? p.likes)||0,
+        commentsCount:Number(p.commentsCount ?? p.comments)||0,
+        timestamp:toDateOnly(p.timestamp),
+        type:p.type||'Image',
+        videoViewCount:p.videoViewCount || null,
+      }))
+      .filter(p=>p.timestamp);
 
     const uname = (profile && profile.username) || 'akun';
     document.title = `@${uname} — Instagram Analytics`;
