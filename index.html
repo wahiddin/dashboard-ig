@@ -846,7 +846,14 @@ async function init() {
     const {profile,posts,updatedAt}=json;
 
     _followers = (profile && profile.followersCount) || 0;
-    _allPosts  = (posts||[]).filter(p=>p.id!=='placeholder');
+    _allPosts  = (posts||[])
+      .filter(p=>p && p.id!=='placeholder' && typeof p.timestamp==='string')
+      .map(p=>({
+        id:p.id, url:p.url||'', displayUrl:p.displayUrl||'',
+        caption:p.caption||'', likesCount:Number(p.likesCount)||0,
+        commentsCount:Number(p.commentsCount)||0, timestamp:p.timestamp,
+        type:p.type||'Image', videoViewCount:p.videoViewCount||null,
+      }));
 
     const uname = (profile && profile.username) || 'akun';
     document.title = `@${uname} — Instagram Analytics`;
@@ -864,26 +871,34 @@ async function init() {
       $("dateTo").value=s[s.length-1].timestamp;
     }
 
-    renderOverview();
-    renderGlossary();
-    renderAll();
-
   } catch(e) {
     badge.textContent='Gagal memuat'; badge.className='scrape-badge error';
     toast('⚠️ Gagal memuat data. Coba refresh halaman.');
-    console.error(e);
+    console.error('init/fetch error:', e);
+    return;
   }
+
+  // Setiap bagian render dijalankan terpisah — kalau satu bagian gagal
+  // (misal karena data tidak lengkap), bagian lain tetap tampil.
+  safeRun('renderOverview', renderOverview);
+  safeRun('renderGlossary', renderGlossary);
+  safeRun('renderAll', renderAll);
+}
+
+function safeRun(label, fn) {
+  try { fn(); }
+  catch(e) { console.error(`Gagal render "${label}":`, e); }
 }
 
 function renderAll() {
   const fp=getFiltered();
-  renderKPIs(fp);
-  renderTop3(fp);
-  renderPosts('all',fp);
-  renderInsights(fp,_followers);
-  renderReko(fp,_followers);
-  renderGrowth();
-  animateBars();
+  safeRun('renderKPIs',      () => renderKPIs(fp));
+  safeRun('renderTop3',      () => renderTop3(fp));
+  safeRun('renderPosts',     () => renderPosts('all',fp));
+  safeRun('renderInsights',  () => renderInsights(fp,_followers));
+  safeRun('renderReko',      () => renderReko(fp,_followers));
+  safeRun('renderGrowth',    () => renderGrowth());
+  safeRun('animateBars',     () => animateBars());
 }
 
 function renderKPIs(fp) {
