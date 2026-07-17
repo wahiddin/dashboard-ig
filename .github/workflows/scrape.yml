@@ -1,0 +1,39 @@
+name: Scrape Instagram Data
+
+on:
+  schedule:
+    # Default: tiap hari jam 22:00 UTC (~05:00 WIB).
+    # Ganti angka cron di bawah kalau mau frekuensi lain.
+    - cron: "0 22 * * *"
+  workflow_dispatch: {}   # tombol "Run workflow" manual di tab Actions
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install js-yaml
+
+      - name: Run scraper
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: node scripts/scrape.js
+
+      - name: Commit updated data
+        run: |
+          git config user.name "ig-analytics-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/data.json
+          git diff --quiet --cached || git commit -m "chore: update Instagram data [skip ci]"
+          git push
