@@ -758,10 +758,12 @@ const PROMO_KEYWORDS = ['promo','diskon','daftar','pendaftaran','registrasi','bu
 const VALUE_KEYWORDS = ['tips','cara','kenapa','kesalahan','panduan','belajar','proses','strategi',
   'insight','pengalaman','pelajaran','studi kasus','perbandingan','review'];
 
-Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
-Chart.defaults.font.size   = 10;
-Chart.defaults.color       = '#6b6b6b';
-Chart.defaults.borderColor = '#e8e6e1';
+if (typeof Chart !== 'undefined') {
+  Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+  Chart.defaults.font.size   = 10;
+  Chart.defaults.color       = '#6b6b6b';
+  Chart.defaults.borderColor = '#e8e6e1';
+}
 
 const TOOLTIP = {
   backgroundColor:'#fff', borderColor:'#e8e6e1', borderWidth:1,
@@ -1019,30 +1021,33 @@ function renderOverview() {
   const avgAll=erVals.length?erVals.reduce((a,v)=>a+v,0)/erVals.length:0;
 
   destroyChart('erChart');
-  _charts.erChart=new Chart($('erChart'),{
-    type:'line',
-    data:{
-      labels:recent.map(p=>p.timestamp.slice(5)),
-      datasets:[
-        {label:'ER',data:erVals,borderColor:ACCENT,backgroundColor:ACCENT+'12',
-         borderWidth:2,pointRadius:4,pointHoverRadius:6,
-         pointBackgroundColor:erVals.map(v=>v>=avgAll?ACCENT:'#dc2626'),fill:true,tension:0.35},
-        {label:'Avg',data:erVals.map(()=>+avgAll.toFixed(2)),
-         borderColor:'#d1cec8',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false},
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
-        label:ctx=>ctx.datasetIndex===0?` ER: ${ctx.parsed.y.toFixed(2)}%`:` Avg: ${ctx.parsed.y.toFixed(2)}%`,
-        afterLabel:ctx=>ctx.datasetIndex===0?`Status: ${erLabel(ctx.parsed.y).txt}`:''
-      }}},
-      scales:{
-        y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMin:0,suggestedMax:Math.max(...erVals,0)*1.3||2},
-        x:{grid:{display:false},ticks:{maxRotation:45}}
+  try {
+    if (typeof Chart === 'undefined') throw new Error('Chart.js belum termuat');
+    _charts.erChart=new Chart($('erChart'),{
+      type:'line',
+      data:{
+        labels:recent.map(p=>p.timestamp.slice(5)),
+        datasets:[
+          {label:'ER',data:erVals,borderColor:ACCENT,backgroundColor:ACCENT+'12',
+           borderWidth:2,pointRadius:4,pointHoverRadius:6,
+           pointBackgroundColor:erVals.map(v=>v>=avgAll?ACCENT:'#dc2626'),fill:true,tension:0.35},
+          {label:'Avg',data:erVals.map(()=>+avgAll.toFixed(2)),
+           borderColor:'#d1cec8',borderWidth:1,borderDash:[4,3],pointRadius:0,fill:false},
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
+          label:ctx=>ctx.datasetIndex===0?` ER: ${ctx.parsed.y.toFixed(2)}%`:` Avg: ${ctx.parsed.y.toFixed(2)}%`,
+          afterLabel:ctx=>ctx.datasetIndex===0?`Status: ${erLabel(ctx.parsed.y).txt}`:''
+        }}},
+        scales:{
+          y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMin:0,suggestedMax:Math.max(...erVals,0)*1.3||2},
+          x:{grid:{display:false},ticks:{maxRotation:45}}
+        }
       }
-    }
-  });
+    });
+  } catch(e) { console.error('Chart erChart gagal dibuat:', e); }
 
   const el=$('erChartNote');
   if (el) el.textContent=`Garis putus-putus = rata-rata ER (${avgAll.toFixed(2)}%). Titik merah = di bawah rata-rata.`;
@@ -1169,29 +1174,32 @@ function renderGrowth() {
   const wKeys=Object.keys(byW).sort(), mKeys=Object.keys(byM).sort();
   const wL=wKeys.slice(-10);
   destroyChart('weeklyChart');
-  _charts.weeklyChart=new Chart($('weeklyChart'),{
-    type:'bar',
-    data:{labels:wL.map(k=>k.replace(/\d{4}-/,'')),datasets:[{
-      data:wL.map(k=>+avgER(byW[k],f).toFixed(2)),
-      backgroundColor:wL.map((_,i)=>i===wL.length-1?ACCENT:ACCENT+'55'),
-      borderRadius:5,borderSkipped:false
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
-      label:ctx=>` ER: ${ctx.parsed.y.toFixed(2)}%`,afterLabel:ctx=>`Status: ${erLabel(ctx.parsed.y).txt}`
-    }}},scales:{y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMax:Math.max(...wL.map(k=>avgER(byW[k],f)),0)*1.3||2},x:{grid:{display:false}}}}
-  });
   destroyChart('monthlyChart');
-  _charts.monthlyChart=new Chart($('monthlyChart'),{
-    type:'bar',
-    data:{labels:mKeys.map(fmtPeriod),datasets:[{
-      data:mKeys.map(k=>+avgER(byM[k],f).toFixed(2)),
-      backgroundColor:mKeys.map((_,i)=>i===mKeys.length-1?ACCENT:ACCENT+'55'),
-      borderRadius:5,borderSkipped:false
-    }]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
-      label:ctx=>` ER: ${ctx.parsed.y.toFixed(2)}%`,afterLabel:ctx=>`Status: ${erLabel(ctx.parsed.y).txt}`
-    }}},scales:{y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMax:Math.max(...mKeys.map(k=>avgER(byM[k],f)),0)*1.3||2},x:{grid:{display:false}}}}
-  });
+  try {
+    if (typeof Chart === 'undefined') throw new Error('Chart.js belum termuat');
+    _charts.weeklyChart=new Chart($('weeklyChart'),{
+      type:'bar',
+      data:{labels:wL.map(k=>k.replace(/\d{4}-/,'')),datasets:[{
+        data:wL.map(k=>+avgER(byW[k],f).toFixed(2)),
+        backgroundColor:wL.map((_,i)=>i===wL.length-1?ACCENT:ACCENT+'55'),
+        borderRadius:5,borderSkipped:false
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
+        label:ctx=>` ER: ${ctx.parsed.y.toFixed(2)}%`,afterLabel:ctx=>`Status: ${erLabel(ctx.parsed.y).txt}`
+      }}},scales:{y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMax:Math.max(...wL.map(k=>avgER(byW[k],f)),0)*1.3||2},x:{grid:{display:false}}}}
+    });
+    _charts.monthlyChart=new Chart($('monthlyChart'),{
+      type:'bar',
+      data:{labels:mKeys.map(fmtPeriod),datasets:[{
+        data:mKeys.map(k=>+avgER(byM[k],f).toFixed(2)),
+        backgroundColor:mKeys.map((_,i)=>i===mKeys.length-1?ACCENT:ACCENT+'55'),
+        borderRadius:5,borderSkipped:false
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TOOLTIP,callbacks:{
+        label:ctx=>` ER: ${ctx.parsed.y.toFixed(2)}%`,afterLabel:ctx=>`Status: ${erLabel(ctx.parsed.y).txt}`
+      }}},scales:{y:{grid:{color:'#f0ede8'},ticks:{callback:v=>v+'%'},suggestedMax:Math.max(...mKeys.map(k=>avgER(byM[k],f)),0)*1.3||2},x:{grid:{display:false}}}}
+    });
+  } catch(e) { console.error('Chart weekly/monthly gagal dibuat:', e); }
   updateGrowthChartNote('weekly');
 
   const takeaways=[];
