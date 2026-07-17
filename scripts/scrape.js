@@ -1,5 +1,6 @@
 // scripts/scrape.js
-// Dipanggil oleh GitHub Actions. Baca config.yml, panggil Apify, tulis data/data.json.
+// Dipanggil oleh GitHub Actions. Baca config.yml, panggil Apify, tulis data/data.json
+// dengan skema yang dipakai index.html (profile.followersCount, posts[].likesCount, dst).
 
 const fs = require("fs");
 const path = require("path");
@@ -15,7 +16,7 @@ const ROOT = path.join(__dirname, "..");
 const config = yaml.load(fs.readFileSync(path.join(ROOT, "config.yml"), "utf8"));
 
 const USERNAME = config.instagram_username;
-const POSTS_LIMIT = config.posts_limit || 24;
+const POSTS_LIMIT = config.posts_limit || 30;
 const DATA_PATH = path.join(ROOT, "data", "data.json");
 
 // Actor Apify yang dipakai: apify/instagram-scraper
@@ -42,71 +43,67 @@ async function runScrape() {
   return res.json();
 }
 
+// Ubah field mentah Apify jadi tipe konten yang dipahami dashboard: Image / Video / Sidecar
+function normalizeType(rawType) {
+  const t = (rawType || "").toLowerCase();
+  if (t.includes("sidecar") || t.includes("carousel")) return "Sidecar";
+  if (t.includes("video") || t.includes("reel")) return "Video";
+  return "Image";
+}
+
+// Timestamp Apify bisa berupa ISO string atau unix seconds — normalisasi ke 'YYYY-MM-DD'
+function toDateString(ts) {
+  if (!ts) return new Date().toISOString().slice(0, 10);
+  const d = typeof ts === "number" ? new Date(ts * 1000) : new Date(ts);
+  return isNaN(d.getTime()) ? new Date().toISOString().slice(0, 10) : d.toISOString().slice(0, 10);
+}
+
 function parseApifyResult(items) {
   // Actor instagram-scraper biasanya mengembalikan 1 object profil
   // dengan field latestPosts di dalamnya. Sesuaikan mapping ini kalau
   // kamu ganti actor Apify-nya.
-  const profile = items[0] || {};
-  const rawPosts = profile.latestPosts || profile.topPosts || [];
+  const profileRaw = items[0] || {};
+  const rawPosts = profileRaw.latestPosts || profileRaw.topPosts || [];
 
   const posts = rawPosts.slice(0, POSTS_LIMIT).map((p) => ({
-    id: p.id || p.shortCode,
-    url: p.url || `https://www.instagram.com/p/${p.shortCode}/`,
-    thumbnail: p.displayUrl || p.thumbnailSrc || "",
-    caption: (p.caption || "").slice(0, 140),
-    likes: p.likesCount ?? 0,
-    comments: p.commentsCount ?? 0,
-    timestamp: p.timestamp || p.takenAtTimestamp || null,
-    type: p.type || "Image",
+    id: p.id || p.shortCode || String(Math.random()).slice(2),
+    url: p.url || (p.shortCode ? `https://www.instagram.com/p/${p.shortCode}/` : ""),
+    displayUrl: p.displayUrl || p.thumbnailSrc || "",
+    caption: p.caption || "",
+    likesCount: p.likesCount ?? 0,
+    commentsCount: p.commentsCount ?? 0,
+    timestamp: toDateString(p.timestamp || p.takenAtTimestamp),
+    type: normalizeType(p.type),
+    videoViewCount: p.videoViewCount ?? p.videoPlayCount ?? null,
   }));
 
   return {
-    username: profile.username || USERNAME,
-    display_name: config.display_name || profile.fullName || USERNAME,
-    profile_pic: profile.profilePicUrlHD || profile.profilePicUrl || "",
-    bio: profile.biography || "",
-    followers: profile.followersCount ?? 0,
-    following: profile.followsCount ?? 0,
-    posts_count: profile.postsCount ?? posts.length,
+    profile: {
+      username: profileRaw.username || USERNAME,
+      displayName: config.display_name || profileRaw.fullName || USERNAME,
+      followersCount: profileRaw.followersCount ?? 0,
+      followingCount: profileRaw.followsCount ?? 0,
+      postsCount: profileRaw.postsCount ?? posts.length,
+    },
     posts,
   };
-}
-
-function updateHistory(existing, snapshot) {
-  const history = existing?.history || [];
-  const today = new Date().toISOString().slice(0, 10);
-
-  const withoutToday = history.filter((h) => h.date !== today);
-  withoutToday.push({
-    date: today,
-    followers: snapshot.followers,
-    posts_count: snapshot.posts_count,
-  });
-
-  // Simpan maksimal 180 titik data (~6 bulan harian) biar file tidak membengkak
-  return withoutToday.slice(-180);
 }
 
 async function main() {
   console.log(`Scraping @${USERNAME} ...`);
 
-  let existing = null;
-  if (fs.existsSync(DATA_PATH)) {
-    existing = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
-  }
-
   const items = await runScrape();
-  const snapshot = parseApifyResult(items);
+  const { profile, posts } = parseApifyResult(items);
 
   const output = {
-    ...snapshot,
-    last_updated: new Date().toISOString(),
-    history: updateHistory(existing, snapshot),
+    profile,
+    posts,
+    updatedAt: new Date().toISOString(),
   };
 
   fs.mkdirSync(path.dirname(DATA_PATH), { recursive: true });
   fs.writeFileSync(DATA_PATH, JSON.stringify(output, null, 2));
-  console.log(`Selesai. Followers: ${output.followers}, Posts: ${output.posts.length}`);
+  console.log(`Selesai. Followers: ${profile.followersCount}, Posts tersimpan: ${posts.length}`);
 }
 
 main().catch((err) => {
