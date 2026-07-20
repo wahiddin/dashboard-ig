@@ -96,14 +96,13 @@ body {
 .date-preset-row {
   display: flex; gap: 4px; padding: 6px 16px 10px;
   background: var(--white); border-bottom: 1px solid var(--border);
-  overflow-x: auto; scrollbar-width: none;
 }
-.date-preset-row::-webkit-scrollbar { display: none; }
 .preset-btn {
-  flex-shrink: 0; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 20px; padding: 3px 10px; font-size: 10px;
+  flex: 1; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 6px; font-size: 10px;
   font-weight: 500; color: var(--muted); cursor: pointer;
-  font-family: inherit; transition: all 0.15s;
+  font-family: inherit; transition: all 0.15s; text-align: center;
+  white-space: nowrap;
 }
 .preset-btn.active, .preset-btn:hover {
   background: var(--accent-lt); border-color: var(--accent); color: var(--accent);
@@ -459,6 +458,7 @@ body {
   </div>
 </div>
 
+<div id="dateFilterBar">
 <div class="date-range-bar">
   <span class="date-range-label">Periode</span>
   <input type="date" id="dateFrom" class="date-input">
@@ -472,6 +472,7 @@ body {
   <button class="preset-btn" onclick="setPreset('30d',this)">30 Hari</button>
   <button class="preset-btn" onclick="setPreset('thisMonth',this)">Bulan ini</button>
   <button class="preset-btn" onclick="setPreset('lastMonth',this)">Bulan lalu</button>
+</div>
 </div>
 
 <div id="view-overview" class="view active">
@@ -612,52 +613,38 @@ body {
 
 <div id="view-posts" class="view">
   <div class="section" style="margin-top:12px">
-    <div class="section-title">Filter</div>
-    <div class="tab-row" style="margin-bottom:12px">
-      <button class="tab-btn active" onclick="filterPosts('all',this)">Semua</button>
-      <button class="tab-btn" onclick="filterPosts('week',this)">Minggu ini</button>
-      <button class="tab-btn" onclick="filterPosts('month',this)">Bulan ini</button>
-    </div>
     <div class="card" id="topPostsContainer"><div class="empty">Memuat data…</div></div>
   </div>
 </div>
 
 <div id="view-insights" class="view">
   <div class="section" style="margin-top:12px">
-    <div class="insight-header">
-      <div class="insight-icon" style="background:#dcfce7">✅</div>
-      <div>
-        <p class="insight-title" style="color:var(--green)">What's Working</p>
-        <p class="insight-subtitle" id="insightWorkingSubtitle">Pola konten yang terbukti perform di periode ini</p>
-      </div>
+    <div class="tab-row" style="margin-bottom:14px">
+      <button class="tab-btn active" onclick="switchInsightTab('working',this)">✅ Working</button>
+      <button class="tab-btn" onclick="switchInsightTab('notworking',this)">⚠️ Not Working</button>
+      <button class="tab-btn" onclick="switchInsightTab('reko',this)">🎯 Rekomendasi</button>
+      <button class="tab-btn" onclick="switchInsightTab('roadmap',this)">🗓️ Roadmap</button>
     </div>
-    <div id="insightWorking"><div class="empty">Memuat…</div></div>
 
-    <div style="height:20px"></div>
-
-    <div class="insight-header">
-      <div class="insight-icon" style="background:#fff7ed">⚠️</div>
-      <div>
-        <p class="insight-title" style="color:var(--orange)">What's NOT Working</p>
-        <p class="insight-subtitle" id="insightNotWorkingSubtitle">Pola yang perlu dihindari atau diubah</p>
-      </div>
+    <div id="insight-tab-working" class="insight-subview">
+      <p class="insight-subtitle" id="insightWorkingSubtitle" style="margin-bottom:10px">Pola konten yang terbukti perform di periode ini</p>
+      <div id="insightWorking"><div class="empty">Memuat…</div></div>
     </div>
-    <div id="insightNotWorking"><div class="empty">Memuat…</div></div>
 
-    <div style="height:20px"></div>
-
-    <div class="insight-header">
-      <div class="insight-icon" style="background:var(--accent-lt)">🎯</div>
-      <div>
-        <p class="insight-title" style="color:var(--accent)">Rekomendasi Aksi</p>
-        <p class="insight-subtitle" id="rekoSubtitle">Berdasarkan data scrape aktual</p>
-      </div>
+    <div id="insight-tab-notworking" class="insight-subview" style="display:none">
+      <p class="insight-subtitle" id="insightNotWorkingSubtitle" style="margin-bottom:10px">Pola yang perlu dihindari atau diubah</p>
+      <div id="insightNotWorking"><div class="empty">Memuat…</div></div>
     </div>
-    <div id="rekoContainer"><div class="empty">Memuat…</div></div>
 
-    <div style="height:8px"></div>
-    <div class="section-title">Roadmap 4 minggu</div>
-    <div id="roadmapContainer"></div>
+    <div id="insight-tab-reko" class="insight-subview" style="display:none">
+      <p class="insight-subtitle" id="rekoSubtitle" style="margin-bottom:10px">Berdasarkan data scrape aktual</p>
+      <div id="rekoContainer"><div class="empty">Memuat…</div></div>
+    </div>
+
+    <div id="insight-tab-roadmap" class="insight-subview" style="display:none">
+      <p class="insight-subtitle" style="margin-bottom:10px">Rencana aksi 4 minggu ke depan</p>
+      <div id="roadmapContainer"></div>
+    </div>
   </div>
 </div>
 
@@ -922,7 +909,7 @@ function renderAll() {
   const fp=getFiltered();
   safeRun('renderKPIs',      () => renderKPIs(fp));
   safeRun('renderTop3',      () => renderTop3(fp));
-  safeRun('renderPosts',     () => renderPosts('all',fp));
+  safeRun('renderPosts',     () => renderPosts(fp));
   safeRun('renderInsights',  () => renderInsights(fp,_followers));
   safeRun('renderReko',      () => renderReko(fp,_followers));
   safeRun('renderGrowth',    () => renderGrowth());
@@ -1270,19 +1257,9 @@ function switchGrowthChart(type,btn) {
   updateGrowthChartNote(type); animateBars();
 }
 
-function filterPosts(filter,btn) {
-  document.querySelectorAll('#view-posts .tab-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  renderPosts(filter,getFiltered());
-}
-function renderPosts(filter,basePosts) {
+function renderPosts(basePosts) {
   const f=_followers;
-  let posts=basePosts||getFiltered();
-  const now=new Date(),today=now.toISOString().slice(0,10);
-  const ago7=new Date(now); ago7.setDate(ago7.getDate()-7);
-  const sM=today.slice(0,7)+'-01';
-  if (filter==='week') posts=posts.filter(p=>p.timestamp>=ago7.toISOString().slice(0,10));
-  else if (filter==='month') posts=posts.filter(p=>p.timestamp>=sM);
+  const posts=basePosts||getFiltered();
   const ranked=[...posts].sort((a,b)=>(b.likesCount+b.commentsCount)-(a.likesCount+a.commentsCount)).slice(0,30);
   const el=$('topPostsContainer');
   if (!el) return;
@@ -1661,6 +1638,14 @@ function renderGlossary() {
   setEl('dynamicSummary', `<strong>Ringkasan:</strong> Dari ${_allPosts.length} post historis, avg ER ~${overallER.toFixed(2)}% (${lb.txt}). ${dominant ? `Format dominan: ${dominant.share}% konten adalah ${dominant.type}.` : ''} Lihat tab Insights untuk rincian apa yang bekerja dan tidak.`);
 }
 
+function switchInsightTab(name,btn) {
+  document.querySelectorAll('.insight-subview').forEach(v=>v.style.display='none');
+  document.querySelectorAll('#view-insights .tab-btn').forEach(b=>b.classList.remove('active'));
+  const target=$('insight-tab-'+name);
+  if(target) target.style.display='';
+  if(btn) btn.classList.add('active');
+}
+
 function animateBars() { document.querySelectorAll('[data-w]').forEach(el=>{ el.style.width=el.dataset.w+'%'; }); }
 function switchView(name,btn) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -1668,6 +1653,8 @@ function switchView(name,btn) {
   const target=$('view-'+name);
   if(target) target.classList.add('active');
   if(btn) btn.classList.add('active');
+  const filterBar=$('dateFilterBar');
+  if (filterBar) filterBar.style.display = (name==='index') ? 'none' : '';
   setTimeout(animateBars,60);
 }
 
