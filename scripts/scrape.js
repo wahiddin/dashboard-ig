@@ -84,13 +84,36 @@ function parseApifyResult(items) {
       followersCount: profileRaw.followersCount ?? 0,
       followingCount: profileRaw.followsCount ?? 0,
       postsCount: profileRaw.postsCount ?? posts.length,
+      bio: profileRaw.biography || "",
     },
     posts,
   };
 }
 
+// Gabungkan snapshot followers hari ini ke histori yang sudah ada,
+// supaya grafik pertumbuhan followers punya data dari waktu ke waktu.
+function updateHistory(existingHistory, followersCount) {
+  const history = Array.isArray(existingHistory) ? existingHistory.slice() : [];
+  const today = new Date().toISOString().slice(0, 10);
+  const withoutToday = history.filter((h) => h.date !== today);
+  withoutToday.push({ date: today, followers: followersCount });
+  withoutToday.sort((a, b) => a.date.localeCompare(b.date));
+  // Simpan maksimal 180 titik data (~6 bulan harian) biar file tidak membengkak
+  return withoutToday.slice(-180);
+}
+
 async function main() {
   console.log(`Scraping @${USERNAME} ...`);
+
+  let existingHistory = [];
+  if (fs.existsSync(DATA_PATH)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
+      existingHistory = existing.history || [];
+    } catch (e) {
+      console.warn("Tidak bisa baca data.json lama, mulai histori baru.", e.message);
+    }
+  }
 
   const items = await runScrape();
   const { profile, posts } = parseApifyResult(items);
@@ -98,12 +121,13 @@ async function main() {
   const output = {
     profile,
     posts,
+    history: updateHistory(existingHistory, profile.followersCount),
     updatedAt: new Date().toISOString(),
   };
 
   fs.mkdirSync(path.dirname(DATA_PATH), { recursive: true });
   fs.writeFileSync(DATA_PATH, JSON.stringify(output, null, 2));
-  console.log(`Selesai. Followers: ${profile.followersCount}, Posts tersimpan: ${posts.length}`);
+  console.log(`Selesai. Followers: ${profile.followersCount}, Posts tersimpan: ${posts.length}, Titik histori: ${output.history.length}`);
 }
 
 main().catch((err) => {
