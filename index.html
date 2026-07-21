@@ -41,11 +41,41 @@ body {
 
 .header {
   background: var(--white); border-bottom: 1px solid var(--border);
-  padding: 20px 16px 12px; position: sticky; top: 0; z-index: 10;
+  padding: 16px 16px 12px; position: sticky; top: 0; z-index: 10;
 }
-.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .header-handle { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
 .header-handle span { color: var(--accent); }
+.header-followers { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+.header-bio { font-size: 11.5px; color: var(--dim); line-height: 1.5; margin-bottom: 16px; white-space: pre-line; }
+
+.week-summary-card {
+  margin: 16px 16px 0;
+  background: linear-gradient(135deg, var(--accent) 0%, #6d5eef 100%);
+  border-radius: var(--r); padding: 16px;
+  color: white;
+}
+.week-summary-title {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  opacity: 0.85; margin-bottom: 8px;
+}
+.week-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.week-summary-item .val { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.week-summary-item .lbl { font-size: 10px; opacity: 0.85; margin-top: 4px; }
+
+.deliverables-bar {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  gap: 10px; flex-wrap: wrap;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 14px; margin: 0 0 12px;
+  font-size: 11.5px; color: var(--muted);
+}
+.deliverables-bar strong { color: var(--ink); }
+.deliverables-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 500; color: var(--ink);
+}
 .scrape-badge {
   font-size: 10px; color: var(--dim);
   background: var(--bg); border: 1px solid var(--border);
@@ -108,15 +138,15 @@ body {
   background: var(--accent-lt); border-color: var(--accent); color: var(--accent);
 }
 
-.section { padding: 14px 16px 0; }
+.section { padding: 0 16px 0; }
 .section-title {
   font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--dim); margin-bottom: 10px;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 8px;
 }
 
 .card {
   background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 14px; margin-bottom: 10px;
+  border-radius: var(--r); padding: 14px; margin-bottom: 12px;
 }
 
 .top3-grid { display: flex; flex-direction: column; gap: 8px; }
@@ -148,30 +178,30 @@ body {
 .top3-er   { font-size: 11px; font-weight: 700; color: var(--accent); }
 
 .ov-health-card {
-  margin: 14px 16px 0;
+  margin: 12px 16px 0;
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--r); padding: 14px 16px;
   display: flex; align-items: center; gap: 12px;
 }
 .ov-health-emoji { font-size: 26px; flex-shrink: 0; }
-.ov-health-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.ov-health-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
 .ov-health-desc  { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
 .ov-kpi-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; padding: 10px 16px 0;
+  gap: 8px; padding: 12px 16px 0;
 }
 .ov-kpi {
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--r); padding: 10px 12px;
 }
-.ov-kpi-label { font-size: 10px; color: var(--muted); margin-bottom: 3px; line-height: 1.3; }
+.ov-kpi-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; line-height: 1.3; }
 .ov-kpi-value { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; line-height: 1; }
-.ov-kpi-sub   { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.ov-kpi-sub   { font-size: 10px; color: var(--muted); margin-top: 4px; }
 .ov-kpi.accent .ov-kpi-value { color: var(--accent); }
 
 .ov-signal-row {
-  display: flex; gap: 6px; padding: 10px 16px 0; flex-wrap: wrap;
+  display: flex; gap: 6px; padding: 12px 16px 0; flex-wrap: wrap;
 }
 .ov-signal {
   display: flex; align-items: center; gap: 5px;
@@ -182,26 +212,26 @@ body {
 .ov-signal-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
 .ov-best-type-card {
-  margin: 10px 16px 0;
+  margin: 12px 16px 0;
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--r); padding: 12px 14px;
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
 }
 .ov-best-type-left { display: flex; align-items: center; gap: 10px; }
 .ov-best-type-icon { font-size: 22px; }
-.ov-best-type-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
+.ov-best-type-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
 .ov-best-type-name  { font-size: 14px; font-weight: 700; }
 .ov-best-type-er    { text-align: right; }
 .ov-best-type-er-val{ font-size: 18px; font-weight: 700; color: var(--accent); }
 .ov-best-type-er-sub{ font-size: 10px; color: var(--muted); }
 
 .ov-consistency {
-  margin: 10px 16px 0;
+  margin: 12px 16px 0;
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--r); padding: 12px 14px;
 }
 .ov-consistency-label { font-size: 10px; color: var(--muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-.ov-week-dots { display: flex; gap: 5px; margin-bottom: 6px; }
+.ov-week-dots { display: flex; gap: 5px; margin-bottom: 8px; }
 .ov-week-dot  { flex: 1; height: 8px; border-radius: 2px; background: var(--border); }
 .ov-week-dot.active { background: var(--accent); }
 .ov-week-dot.low    { background: var(--accent); opacity: 0.35; }
@@ -210,52 +240,52 @@ body {
 
 .g-status-card {
   background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 16px; margin-bottom: 10px;
+  border-radius: var(--r); padding: 16px; margin-bottom: 12px;
   display: flex; align-items: flex-start; gap: 12px;
 }
 .g-status-emoji { font-size: 28px; flex-shrink: 0; line-height: 1; }
-.g-status-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+.g-status-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 .g-status-desc  { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
 .g-compare-card {
   background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 14px; margin-bottom: 10px;
+  border-radius: var(--r); padding: 14px; margin-bottom: 12px;
 }
 .g-compare-label {
   font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.07em; color: var(--dim); margin-bottom: 10px;
+  letter-spacing: 0.07em; color: var(--dim); margin-bottom: 8px;
 }
 .g-compare-row {
   display: grid; grid-template-columns: 1fr 32px 1fr; gap: 0;
-  align-items: center; margin-bottom: 10px;
+  align-items: center; margin-bottom: 8px;
 }
 .g-period-block.curr { text-align: right; }
-.g-period-name { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
+.g-period-name { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
 .g-period-er   { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-.g-period-posts{ font-size: 10px; color: var(--dim); margin-top: 2px; }
+.g-period-posts{ font-size: 10px; color: var(--dim); margin-top: 4px; }
 .g-arrow-col   { text-align: center; font-size: 18px; }
-.g-bar-compare { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.g-bar-compare { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .g-bar-col     { flex: 1; }
 .g-bar-name    { font-size: 10px; color: var(--dim); margin-bottom: 4px; }
 .g-bar-track   { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; }
 .g-bar-fill    { height: 100%; border-radius: 3px; transition: width 0.9s cubic-bezier(0.16,1,0.3,1); width: 0; }
 .g-verdict     {
-  margin-top: 10px; padding: 8px 10px;
+  margin-top: 8px; padding: 8px 10px;
   border-radius: var(--r-sm); font-size: 11px; line-height: 1.6;
 }
 
 .g-bench-card {
   background: var(--white); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 14px; margin-bottom: 10px;
+  border-radius: var(--r); padding: 14px; margin-bottom: 12px;
 }
 .g-bench-label {
   font-size: 10px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.07em; color: var(--dim); margin-bottom: 10px;
+  letter-spacing: 0.07em; color: var(--dim); margin-bottom: 8px;
 }
 .g-bench-track {
   position: relative; height: 8px;
   background: linear-gradient(to right, var(--red-lt) 0%, var(--orange-lt) 33%, var(--green-lt) 66%, var(--accent-lt) 100%);
-  border-radius: 4px; margin-bottom: 6px;
+  border-radius: 4px; margin-bottom: 8px;
 }
 .g-bench-marker {
   position: absolute; top: -4px; width: 16px; height: 16px;
@@ -274,7 +304,7 @@ body {
 }
 
 .g-chart-toggle {
-  display: flex; gap: 4px; margin-bottom: 10px;
+  display: flex; gap: 4px; margin-bottom: 8px;
   background: var(--bg); border-radius: 7px; padding: 3px;
 }
 .g-chart-btn {
@@ -287,7 +317,7 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-.g-takeaway-list { display: flex; flex-direction: column; gap: 6px; }
+.g-takeaway-list { display: flex; flex-direction: column; gap: 8px; }
 .g-takeaway {
   display: flex; gap: 10px; align-items: flex-start;
   background: var(--bg); border-radius: var(--r-sm); padding: 10px;
@@ -315,7 +345,7 @@ body {
 .post-caption {
   font-size: 12px; line-height: 1.4; color: var(--ink);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  margin-bottom: 5px; font-weight: 500;
+  margin-bottom: 4px; font-weight: 500;
 }
 .post-caption a { color: inherit; text-decoration: none; }
 .post-caption a:hover { text-decoration: underline; }
@@ -344,7 +374,7 @@ body {
 .delta.down { background: var(--red-lt);    color: var(--red); }
 .delta.flat { background: var(--orange-lt); color: var(--orange); }
 
-.insight-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.insight-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .insight-icon {
   width: 28px; height: 28px; border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
@@ -367,30 +397,30 @@ body {
   border-left: 3px solid var(--accent); border-radius: var(--r);
   padding: 14px; margin-bottom: 8px;
 }
-.reko-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.reko-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
 .reko-icon-box {
   width: 32px; height: 32px; background: var(--accent-lt);
   border-radius: 8px; display: flex; align-items: center; justify-content: center;
   font-size: 15px; flex-shrink: 0;
 }
-.reko-title    { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 2px; }
+.reko-title    { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
 .reko-subtitle { font-size: 11px; color: var(--muted); }
 .reko-problem  {
   background: #fff7ed; border: 1px solid #fed7aa;
-  border-radius: var(--r-sm); padding: 8px 10px; margin-bottom: 10px;
+  border-radius: var(--r-sm); padding: 8px 10px; margin-bottom: 8px;
   font-size: 11px; line-height: 1.6; color: #7c2d12;
 }
-.reko-actions { display: flex; flex-direction: column; gap: 6px; }
+.reko-actions { display: flex; flex-direction: column; gap: 8px; }
 .reko-action {
   display: flex; gap: 8px; background: var(--bg);
   border-radius: var(--r-sm); padding: 8px 10px;
 }
 .reko-action-icon  { font-size: 13px; flex-shrink: 0; }
-.reko-action-title { font-size: 12px; font-weight: 500; margin-bottom: 1px; }
+.reko-action-title { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
 .reko-action-desc  { font-size: 11px; color: var(--muted); line-height: 1.5; }
 .impact-bar-row {
   display: flex; align-items: center; gap: 8px;
-  margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+  margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);
 }
 .impact-label  { font-size: 10px; font-weight: 500; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; }
 .impact-dots   { display: flex; gap: 3px; }
@@ -401,7 +431,7 @@ body {
 .gloss-section-title {
   font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--dim);
-  padding: 14px 16px 6px; border-top: 1px solid var(--border); margin-top: 4px;
+  padding: 12px 16px 8px; border-top: 1px solid var(--border); margin-top: 4px;
 }
 .gloss-section-title:first-child { border-top: none; margin-top: 0; }
 .gloss-item {
@@ -446,9 +476,13 @@ body {
 
 <div class="header">
   <div class="header-top">
-    <div class="header-handle" id="headerHandle"><span>@</span>akun</div>
+    <div>
+      <div class="header-handle" id="headerHandle"><span>@</span>akun</div>
+      <div class="header-followers" id="headerFollowers"></div>
+    </div>
     <span class="scrape-badge loading" id="scrapeBadge">Memuat…</span>
   </div>
+  <p class="header-bio" id="headerBio"></p>
   <div class="tab-row">
     <button class="tab-btn active" onclick="switchView('overview',this)">Overview</button>
     <button class="tab-btn" onclick="switchView('growth',this)">Growth</button>
@@ -476,6 +510,16 @@ body {
 </div>
 
 <div id="view-overview" class="view active">
+  <div class="week-summary-card" id="weekSummaryCard">
+    <p class="week-summary-title">📅 Ringkasan Minggu Ini</p>
+    <div class="week-summary-grid" id="weekSummaryGrid">
+      <div class="week-summary-item"><div class="val">—</div><div class="lbl">Post</div></div>
+      <div class="week-summary-item"><div class="val">—</div><div class="lbl">Likes</div></div>
+      <div class="week-summary-item"><div class="val">—</div><div class="lbl">Komentar</div></div>
+      <div class="week-summary-item"><div class="val">—</div><div class="lbl">Followers</div></div>
+    </div>
+  </div>
+
   <div class="ov-health-card" id="ovHealthCard">
     <div class="ov-health-emoji" id="ovHealthEmoji">⏳</div>
     <div>
@@ -539,7 +583,7 @@ body {
     <p class="ov-consistency-desc" id="ovConsistencyDesc">Memuat…</p>
   </div>
 
-  <div class="section" style="margin-top:10px">
+  <div class="section" style="margin-top:12px">
     <div class="section-title">Top 3 post (periode ini)</div>
     <div class="top3-grid" id="top3Container"><div class="empty">Memuat data…</div></div>
   </div>
@@ -550,13 +594,26 @@ body {
       <div class="chart-wrap" style="height:160px">
         <canvas id="erChart" role="img" aria-label="Line chart ER 12 post terakhir"></canvas>
       </div>
-      <p style="font-size:10px;color:var(--dim);margin-top:6px" id="erChartNote"></p>
+      <p style="font-size:10px;color:var(--dim);margin-top:8px" id="erChartNote"></p>
     </div>
   </div>
 </div>
 
 <div id="view-growth" class="view">
-  <div class="section" style="margin-top:14px">
+  <div class="section" style="margin-top:16px">
+    <div class="card" style="padding:14px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+        <p class="g-compare-label" style="margin-bottom:0">Pertumbuhan Followers</p>
+        <span id="followerGrowthDelta" style="font-size:11px;font-weight:600"></span>
+      </div>
+      <div class="chart-wrap" style="height:160px" id="followerGrowthWrap">
+        <canvas id="followerGrowthChart" role="img" aria-label="Grafik pertumbuhan followers"></canvas>
+      </div>
+      <div id="followerGrowthEmpty" class="empty" style="display:none;padding:16px 8px">Grafik akan muncul setelah data histori followers terkumpul (minimal 2× scrape).</div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:12px">
     <div class="g-status-card">
       <div class="g-status-emoji" id="growthStatusEmoji">⏳</div>
       <div>
@@ -566,21 +623,21 @@ body {
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" style="margin-top:12px">
     <div class="g-compare-card">
       <p class="g-compare-label">Minggu ini vs minggu lalu</p>
       <div id="wowCompare"><div class="empty" style="padding:8px">Memuat…</div></div>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" style="margin-top:12px">
     <div class="g-compare-card">
       <p class="g-compare-label">Bulan ini vs bulan lalu</p>
       <div id="momCompare"><div class="empty" style="padding:8px">Memuat…</div></div>
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" style="margin-top:12px">
     <div class="g-bench-card">
       <p class="g-bench-label" id="benchLabel">Posisi ER kamu vs rata-rata akun ukuran serupa</p>
       <div class="g-bench-track"><div class="g-bench-marker" id="benchMarker" style="left:0%"></div></div>
@@ -589,7 +646,7 @@ body {
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" style="margin-top:12px">
     <div class="g-chart-toggle">
       <button class="g-chart-btn active" onclick="switchGrowthChart('weekly',this)">Per Minggu</button>
       <button class="g-chart-btn"        onclick="switchGrowthChart('monthly',this)">Per Bulan</button>
@@ -605,21 +662,22 @@ body {
     </div>
   </div>
 
-  <div class="section" style="padding-bottom:4px">
+  <div class="section" style="margin-top:12px;padding-bottom:4px">
     <div class="section-title">Yang perlu kamu tahu</div>
     <div class="g-takeaway-list" id="growthTakeaways"></div>
   </div>
 </div>
 
 <div id="view-posts" class="view">
-  <div class="section" style="margin-top:12px">
+  <div class="section" style="margin-top:16px">
+    <div class="deliverables-bar" id="deliverablesBar"></div>
     <div class="card" id="topPostsContainer"><div class="empty">Memuat data…</div></div>
   </div>
 </div>
 
 <div id="view-insights" class="view">
-  <div class="section" style="margin-top:12px">
-    <div class="tab-row" style="margin-bottom:14px">
+  <div class="section" style="margin-top:16px">
+    <div class="tab-row" style="margin-bottom:12px">
       <button class="tab-btn active" onclick="switchInsightTab('working',this)">✅ Working</button>
       <button class="tab-btn" onclick="switchInsightTab('notworking',this)">⚠️ Not Working</button>
       <button class="tab-btn" onclick="switchInsightTab('reko',this)">🎯 Rekomendasi</button>
@@ -627,22 +685,22 @@ body {
     </div>
 
     <div id="insight-tab-working" class="insight-subview">
-      <p class="insight-subtitle" id="insightWorkingSubtitle" style="margin-bottom:10px">Pola konten yang terbukti perform di periode ini</p>
+      <p class="insight-subtitle" id="insightWorkingSubtitle" style="margin-bottom:8px">Pola konten yang terbukti perform di periode ini</p>
       <div id="insightWorking"><div class="empty">Memuat…</div></div>
     </div>
 
     <div id="insight-tab-notworking" class="insight-subview" style="display:none">
-      <p class="insight-subtitle" id="insightNotWorkingSubtitle" style="margin-bottom:10px">Pola yang perlu dihindari atau diubah</p>
+      <p class="insight-subtitle" id="insightNotWorkingSubtitle" style="margin-bottom:8px">Pola yang perlu dihindari atau diubah</p>
       <div id="insightNotWorking"><div class="empty">Memuat…</div></div>
     </div>
 
     <div id="insight-tab-reko" class="insight-subview" style="display:none">
-      <p class="insight-subtitle" id="rekoSubtitle" style="margin-bottom:10px">Berdasarkan data scrape aktual</p>
+      <p class="insight-subtitle" id="rekoSubtitle" style="margin-bottom:8px">Berdasarkan data scrape aktual</p>
       <div id="rekoContainer"><div class="empty">Memuat…</div></div>
     </div>
 
     <div id="insight-tab-roadmap" class="insight-subview" style="display:none">
-      <p class="insight-subtitle" style="margin-bottom:10px">Rencana aksi 4 minggu ke depan</p>
+      <p class="insight-subtitle" style="margin-bottom:8px">Rencana aksi 4 minggu ke depan</p>
       <div id="roadmapContainer"></div>
     </div>
   </div>
@@ -735,6 +793,10 @@ body {
 const ACCENT     = '#5046e4';
 const TYPE_COLOR = { Sidecar:'#5046e4', Video:'#0ea5e9', Image:'#f59e0b' };
 const TYPE_ICON  = { Sidecar:'🗂️', Video:'🎬', Image:'🖼️' };
+// Label yang ditampilkan ke user/client — istilah Apify (Sidecar/Video/Image)
+// dipetakan ke istilah yang lazim dipakai dalam laporan content agency.
+const TYPE_LABEL = { Sidecar:'Carousel', Video:'Reels', Image:'Single Image' };
+const typeLabel  = t => TYPE_LABEL[t] || t;
 const RANK_CLS   = ['gold', 'silver', 'bronze'];
 const RANK_LABEL = ['🥇', '🥈', '🥉'];
 
@@ -759,6 +821,7 @@ const TOOLTIP = {
 
 let _allPosts  = [];
 let _followers = 0;
+let _history   = [];
 let _dateFrom  = null;
 let _dateTo    = null;
 let _charts    = {};
@@ -850,11 +913,18 @@ async function init() {
       followersCount: json.followers,
       followingCount: json.following,
       postsCount: json.posts_count,
+      bio: json.bio,
     };
     const rawPosts   = json.posts || [];
     const updatedAt  = json.updatedAt || json.last_updated;
+    const rawHistory = json.history || [];
 
     _followers = Number(profile && profile.followersCount) || 0;
+    _history   = rawHistory
+      .filter(h=>h && h.date && Number.isFinite(Number(h.followers)))
+      .map(h=>({ date: toDateOnly(h.date), followers: Number(h.followers) }))
+      .filter(h=>h.date)
+      .sort((a,b)=>a.date.localeCompare(b.date));
     _allPosts  = rawPosts
       .filter(p=>p && p.id!=='placeholder' && (p.timestamp))
       .map(p=>({
@@ -873,6 +943,10 @@ async function init() {
     const uname = (profile && profile.username) || 'akun';
     document.title = `@${uname} — Instagram Analytics`;
     setEl('headerHandle', `<span>@</span>${uname}`);
+    setEl('headerFollowers', `${_followers.toLocaleString('id')} followers`);
+    const bioText = (profile && profile.bio) || '';
+    setEl('headerBio', bioText.replace(/</g,'&lt;'));
+    $('headerBio').style.display = bioText ? '' : 'none';
 
     if (updatedAt) {
       const d=new Date(updatedAt);
@@ -907,13 +981,95 @@ function safeRun(label, fn) {
 
 function renderAll() {
   const fp=getFiltered();
+  safeRun('renderWeekSummary', () => renderWeekSummary());
   safeRun('renderKPIs',      () => renderKPIs(fp));
   safeRun('renderTop3',      () => renderTop3(fp));
   safeRun('renderPosts',     () => renderPosts(fp));
+  safeRun('renderDeliverables', () => renderDeliverables(fp));
   safeRun('renderInsights',  () => renderInsights(fp,_followers));
   safeRun('renderReko',      () => renderReko(fp,_followers));
   safeRun('renderGrowth',    () => renderGrowth());
+  safeRun('renderFollowerGrowth', () => renderFollowerGrowth());
   safeRun('animateBars',     () => animateBars());
+}
+
+function renderWeekSummary() {
+  const now = new Date();
+  const thisWeekKey = isoWeek(now.toISOString());
+  const weekPosts = _allPosts.filter(p => isoWeek(p.timestamp) === thisWeekKey);
+
+  const totalLikes = weekPosts.reduce((s,p)=>s+p.likesCount,0);
+  const totalComments = weekPosts.reduce((s,p)=>s+p.commentsCount,0);
+
+  // Delta followers ~7 hari terakhir, dari data histori kalau tersedia
+  let followerDeltaText = '—';
+  if (_history.length >= 2) {
+    const latest = _history[_history.length-1];
+    const weekAgoDate = new Date(now.getTime()-7*86400000).toISOString().slice(0,10);
+    let refPoint = _history[0];
+    for (const h of _history) { if (h.date <= weekAgoDate) refPoint = h; else break; }
+    const delta = latest.followers - refPoint.followers;
+    followerDeltaText = (delta>=0?'+':'') + delta.toLocaleString('id');
+  } else if (_history.length === 1) {
+    followerDeltaText = 'data baru';
+  }
+
+  const grid = $('weekSummaryGrid');
+  if (grid) {
+    grid.innerHTML = `
+      <div class="week-summary-item"><div class="val">${weekPosts.length}</div><div class="lbl">Post</div></div>
+      <div class="week-summary-item"><div class="val">${totalLikes.toLocaleString('id')}</div><div class="lbl">Likes</div></div>
+      <div class="week-summary-item"><div class="val">${totalComments.toLocaleString('id')}</div><div class="lbl">Komentar</div></div>
+      <div class="week-summary-item"><div class="val">${followerDeltaText}</div><div class="lbl">Followers</div></div>
+    `;
+  }
+}
+
+function renderFollowerGrowth() {
+  const wrap=$('followerGrowthWrap'), emptyEl=$('followerGrowthEmpty'), deltaEl=$('followerGrowthDelta');
+  destroyChart('followerGrowthChart');
+
+  if (_history.length < 2) {
+    if (wrap) wrap.style.display='none';
+    if (emptyEl) emptyEl.style.display='';
+    if (deltaEl) deltaEl.textContent='';
+    return;
+  }
+  if (wrap) wrap.style.display='';
+  if (emptyEl) emptyEl.style.display='none';
+
+  const first=_history[0], last=_history[_history.length-1];
+  const delta=last.followers-first.followers;
+  if (deltaEl) {
+    deltaEl.textContent=`${delta>=0?'+':''}${delta.toLocaleString('id')} sejak ${first.date}`;
+    deltaEl.style.color = delta>=0 ? 'var(--green)' : 'var(--red)';
+  }
+
+  try {
+    if (typeof Chart === 'undefined') throw new Error('Chart.js belum termuat');
+    _charts.followerGrowthChart=new Chart($('followerGrowthChart'),{
+      type:'line',
+      data:{
+        labels:_history.map(h=>h.date.slice(5)),
+        datasets:[{
+          data:_history.map(h=>h.followers),
+          borderColor:ACCENT, backgroundColor:ACCENT+'14',
+          borderWidth:2, pointRadius:0, pointHoverRadius:4,
+          pointBackgroundColor:ACCENT, fill:true, tension:0.3,
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{display:false}, tooltip:{...TOOLTIP, callbacks:{
+          label:ctx=>` ${ctx.parsed.y.toLocaleString('id')} followers`
+        }}},
+        scales:{
+          y:{grid:{color:'#f0ede8'}, ticks:{callback:v=>v.toLocaleString('id')}},
+          x:{grid:{display:false}, ticks:{maxRotation:45}}
+        }
+      }
+    });
+  } catch(e) { console.error('Chart followerGrowth gagal dibuat:', e); }
 }
 
 function renderKPIs(fp) {
@@ -996,7 +1152,7 @@ function renderKPIs(fp) {
   if (typeAvg.length) {
     const best=typeAvg[0];
     setEl('ovBestTypeIcon', TYPE_ICON[best.t]||'📄');
-    setEl('ovBestTypeName', `${best.t} · ${best.n} post`);
+    setEl('ovBestTypeName', `${typeLabel(best.t)} · ${best.n} post`);
     setEl('ovBestTypeER',   best.avg.toFixed(2)+'%');
   }
 }
@@ -1019,7 +1175,7 @@ function renderTop3(fp) {
         <div class="top3-body">
           <p class="top3-cap">${capInner}</p>
           <div class="top3-meta">
-            <span style="font-size:10px;font-weight:500;padding:1px 6px;border-radius:4px;background:${tc}18;color:${tc}">${p.type}</span>
+            <span style="font-size:10px;font-weight:500;padding:1px 6px;border-radius:4px;background:${tc}18;color:${tc}">${typeLabel(p.type)}</span>
             <span class="top3-stat">❤️ ${p.likesCount} · 💬 ${p.commentsCount}</span>
             <span class="top3-er">${er}% ER</span>${link}
           </div>
@@ -1257,6 +1413,20 @@ function switchGrowthChart(type,btn) {
   updateGrowthChartNote(type); animateBars();
 }
 
+function renderDeliverables(fp) {
+  const el=$('deliverablesBar');
+  if (!el) return;
+  if (!fp.length) { el.innerHTML='Tidak ada post di periode ini.'; return; }
+
+  const byType = fp.reduce((acc,p)=>{ (acc[p.type]=acc[p.type]||0); acc[p.type]++; return acc; },{});
+  const chips = Object.entries(byType)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([t,n])=>`<span class="deliverables-chip">${TYPE_ICON[t]||'📄'} ${n} ${typeLabel(t)}</span>`)
+    .join('');
+
+  el.innerHTML = `<strong>${fp.length} post di-deliver</strong> periode ini · ${chips}`;
+}
+
 function renderPosts(basePosts) {
   const f=_followers;
   const posts=basePosts||getFiltered();
@@ -1277,7 +1447,7 @@ function renderPosts(basePosts) {
         <div class="post-body">
           <p class="post-caption">${cap}</p>
           <div class="post-meta">
-            <span class="post-tag" style="color:${tc};border-color:${tc}20;background:${tc}10">${p.type}</span>
+            <span class="post-tag" style="color:${tc};border-color:${tc}20;background:${tc}10">${typeLabel(p.type)}</span>
             <span class="post-tag">${p.timestamp}</span>
             <span class="post-stat">❤️ ${p.likesCount.toLocaleString()} · 💬 ${p.commentsCount}</span>
             ${views}<span class="post-er">${er}% ER</span>${link}
@@ -1345,15 +1515,15 @@ function renderInsights(posts, FOLLOWERS) {
     if (singleType) {
       working.push({
         icon: TYPE_ICON[bestType.type]||'📄',
-        title: `100% konten adalah ${bestType.type} — konsistensi format terlihat`,
-        body: `Semua ${bestType.count} post periode ini menggunakan format <strong>${bestType.type}</strong> dengan avg ER <strong>${erFmt(bestType.avgER)}</strong>. Coba variasikan salah satu format lain sebagai pembanding di periode berikutnya.`
+        title: `100% konten adalah ${typeLabel(bestType.type)} — konsistensi format terlihat`,
+        body: `Semua ${bestType.count} post periode ini menggunakan format <strong>${typeLabel(bestType.type)}</strong> dengan avg ER <strong>${erFmt(bestType.avgER)}</strong>. Coba variasikan salah satu format lain sebagai pembanding di periode berikutnya.`
       });
     } else {
       const pct = ((bestType.avgER - avgERall)/avgERall*100).toFixed(0);
       working.push({
         icon: TYPE_ICON[bestType.type]||'📄',
-        title: `${bestType.type} adalah format terkuat (avg ER ${erFmt(bestType.avgER)})`,
-        body: `${bestType.count} post format ${bestType.type} avg ER <strong>${erFmt(bestType.avgER)}</strong> — <strong>${pct}% di atas rata-rata</strong> (${erFmt(avgERall)}). Prioritaskan format ini.`
+        title: `${typeLabel(bestType.type)} adalah format terkuat (avg ER ${erFmt(bestType.avgER)})`,
+        body: `${bestType.count} post format ${typeLabel(bestType.type)} avg ER <strong>${erFmt(bestType.avgER)}</strong> — <strong>${pct}% di atas rata-rata</strong> (${erFmt(avgERall)}). Prioritaskan format ini.`
       });
     }
   }
@@ -1437,8 +1607,8 @@ function renderInsights(posts, FOLLOWERS) {
     const pct = ((avgERall - worstType.avgER)/avgERall*100).toFixed(0);
     notWorking.push({
       icon: TYPE_ICON[worstType.type]||'📄',
-      title: `${worstType.type} punya ER terendah (avg ${erFmt(worstType.avgER)})`,
-      body: `${worstType.count} post ${worstType.type} rata-rata ER <strong>${erFmt(worstType.avgER)}</strong> — <strong>${pct}% di bawah rata-rata</strong>. Evaluasi angle dan hook konten format ini atau kurangi frekuensinya.`
+      title: `${typeLabel(worstType.type)} punya ER terendah (avg ${erFmt(worstType.avgER)})`,
+      body: `${worstType.count} post ${typeLabel(worstType.type)} rata-rata ER <strong>${erFmt(worstType.avgER)}</strong> — <strong>${pct}% di bawah rata-rata</strong>. Evaluasi angle dan hook konten format ini atau kurangi frekuensinya.`
     });
   }
 
@@ -1453,7 +1623,7 @@ function renderInsights(posts, FOLLOWERS) {
     notWorking.push({
       icon: '📉',
       title: `Post terlemah: "${(worst.caption||'').slice(0,50)}..." (ER ${erFmt(erOf(worst))})`,
-      body: `${worst.likesCount} likes, ${worst.commentsCount} komentar. ${reasons.length?'Kemungkinan penyebab: '+reasons.join(', ')+'.':''} Format: ${worst.type}, tanggal: ${worst.timestamp}.`
+      body: `${worst.likesCount} likes, ${worst.commentsCount} komentar. ${reasons.length?'Kemungkinan penyebab: '+reasons.join(', ')+'.':''} Format: ${typeLabel(worst.type)}, tanggal: ${worst.timestamp}.`
     });
   }
 
@@ -1538,13 +1708,13 @@ function renderReko(posts, FOLLOWERS) {
   if (bestType && typeStats.length > 1) {
     const pct = ((bestType.avgER-avgERall)/avgERall*100).toFixed(0);
     rekoCards.push(mkReko('📊',
-      `Perbanyak ${bestType.type} — Format Terkuat`,
+      `Perbanyak ${typeLabel(bestType.type)} — Format Terkuat`,
       `Format · Dampak tinggi · 3–4 minggu`,
-      `<strong>Data bilang:</strong> ${bestType.count} post ${bestType.type} avg ER <strong>${erFmt(bestType.avgER)}</strong> (${pct}% di atas rata-rata). Format ${worstType.type} hanya ${erFmt(worstType.avgER)}.`,
+      `<strong>Berdasarkan data:</strong> ${bestType.count} post ${typeLabel(bestType.type)} avg ER <strong>${erFmt(bestType.avgER)}</strong> (${pct}% di atas rata-rata). Format ${typeLabel(worstType.type)} hanya ${erFmt(worstType.avgER)}.`,
       [
-        {icon:'🗂️', title:`Naikkan proporsi ${bestType.type} jadi min. 50% dari total posting`, desc:`Format ini terbukti dari data periode ini. Target: min. 2 post ${bestType.type} per bulan.`},
+        {icon:'🗂️', title:`Naikkan proporsi ${typeLabel(bestType.type)} jadi min. 50% dari total posting`, desc:`Format ini terbukti dari data periode ini. Target: min. 2 post ${typeLabel(bestType.type)} per bulan.`},
         {icon:'🔬', title:`Replikasi struktur top post ke topik baru`, desc:`Lihat top 3 di tab Overview — pelajari angle, panjang caption, dan timing-nya.`},
-        {icon:'📉', title:`Kurangi frekuensi ${worstType.type} atau ubah angle-nya`, desc:`${worstType.count} post ${worstType.type} avg ER hanya ${erFmt(worstType.avgER)}. Evaluasi ulang hook dan topiknya.`}
+        {icon:'📉', title:`Kurangi frekuensi ${typeLabel(worstType.type)} atau ubah angle-nya`, desc:`${worstType.count} post ${typeLabel(worstType.type)} avg ER hanya ${erFmt(worstType.avgER)}. Evaluasi ulang hook dan topiknya.`}
       ], 4, '~3–4 minggu'
     ));
   }
@@ -1553,7 +1723,7 @@ function renderReko(posts, FOLLOWERS) {
     rekoCards.push(mkReko('💬',
       'Unlock Komentar — Caption Harus Memancing',
       `Engagement · Dampak sangat tinggi · Mulai sekarang`,
-      `<strong>Data bilang:</strong> <strong>${pctZero}%</strong> post (${zeroCmt.length}/${posts.length}) dapat 0 komentar. ${withCmt.length > 0 ? 'Post dengan komentar avg ER '+erFmt(withCmt.reduce((s,p)=>s+erOf(p),0)/withCmt.length)+' vs rata-rata '+erFmt(avgERall)+'.':''}`,
+      `<strong>Berdasarkan data:</strong> <strong>${pctZero}%</strong> post (${zeroCmt.length}/${posts.length}) dapat 0 komentar. ${withCmt.length > 0 ? 'Post dengan komentar avg ER '+erFmt(withCmt.reduce((s,p)=>s+erOf(p),0)/withCmt.length)+' vs rata-rata '+erFmt(avgERall)+'.':''}`,
       [
         {icon:'❓', title:'Tutup setiap caption dengan 1 pertanyaan spesifik', desc:'Bukan "Setuju?" tapi pertanyaan yang butuh jawaban substantif.'},
         {icon:'🪞', title:'1 konten personal per bulan', desc:'Konten personal terbukti dapat komentar lebih banyak. Orang merespons orang, bukan tips.'},
@@ -1572,8 +1742,8 @@ function renderReko(posts, FOLLOWERS) {
       isQualityBetter ? 'Kurangi Frekuensi — Fokus ke Kualitas' : 'Pertahankan Ritme Posting',
       `Konsistensi · Dampak sedang · Bulan ini`,
       isQualityBetter
-        ? `<strong>Data bilang:</strong> Bulan dengan posting terbanyak (${highFreq[0]}: ${highFreq[1].length} post) avg ER <strong>${erFmt(highFreqER)}</strong> — lebih rendah dari bulan lain (${erFmt(otherMonthsER)}). Lebih banyak ≠ lebih baik.`
-        : `<strong>Data bilang:</strong> Rata-rata ${avgPostsPerMonth.toFixed(1)} post/bulan dengan ER yang konsisten. Pertahankan ritme ini dan fokus naikkan kualitas per post.`,
+        ? `<strong>Berdasarkan data:</strong> Bulan dengan posting terbanyak (${highFreq[0]}: ${highFreq[1].length} post) avg ER <strong>${erFmt(highFreqER)}</strong> — lebih rendah dari bulan lain (${erFmt(otherMonthsER)}). Lebih banyak ≠ lebih baik.`
+        : `<strong>Berdasarkan data:</strong> Rata-rata ${avgPostsPerMonth.toFixed(1)} post/bulan dengan ER yang konsisten. Pertahankan ritme ini dan fokus naikkan kualitas per post.`,
       [
         {icon:'🎯', title: isQualityBetter ? `Target: max ${Math.max(3, Math.round(avgPostsPerMonth*0.7))} post per bulan` : 'Jaga konsistensi posting', desc: isQualityBetter ? 'Alokasikan waktu yang tersisa untuk riset topik dan copywriting yang lebih dalam.' : 'Konsistensi lebih penting dari fluktuasi besar. Buat content calendar 2 minggu ke depan.'},
         {icon:'✍️', title:'Gunakan framework: Masalah → Konteks → Solusi → Pertanyaan', desc:'Post top biasanya mengikuti pola ini. Post yang gagal biasanya pernyataan singkat tanpa konteks dan solusi.'},
@@ -1595,7 +1765,7 @@ function renderReko(posts, FOLLOWERS) {
           <tbody>
             <tr>
               <td style="padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;white-space:nowrap;"><span style="background:var(--green-lt);color:var(--green);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;">W1</span></td>
-              <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink);line-height:1.5;">Buat 1 post format <strong>${bestType ? bestType.type : 'Carousel'}</strong> (format terkuat periode ini). Tambah pertanyaan spesifik di akhir caption. Balas semua komentar dalam 1 jam.</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink);line-height:1.5;">Buat 1 post format <strong>${bestType ? typeLabel(bestType.type) : 'Carousel'}</strong> (format terkuat periode ini). Tambah pertanyaan spesifik di akhir caption. Balas semua komentar dalam 1 jam.</td>
             </tr>
             <tr>
               <td style="padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;white-space:nowrap;"><span style="background:var(--accent-lt);color:var(--accent);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;">W2</span></td>
@@ -1603,7 +1773,7 @@ function renderReko(posts, FOLLOWERS) {
             </tr>
             <tr>
               <td style="padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;white-space:nowrap;"><span style="background:#fff7ed;color:var(--orange);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;">W3</span></td>
-              <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink);line-height:1.5;">${worstType && typeStats.length>1 ? 'Hindari format <strong>'+worstType.type+'</strong> minggu ini — evaluasi apakah angle atau hook perlu diubah total.' : 'Fokus pada topik yang belum pernah diangkat. Hindari repetisi topik yang sama dalam &lt;2 minggu.'}</td>
+              <td style="padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink);line-height:1.5;">${worstType && typeStats.length>1 ? 'Hindari format <strong>'+typeLabel(worstType.type)+'</strong> minggu ini — evaluasi apakah angle atau hook perlu diubah total.' : 'Fokus pada topik yang belum pernah diangkat. Hindari repetisi topik yang sama dalam &lt;2 minggu.'}</td>
             </tr>
             <tr>
               <td style="padding:10px 12px;vertical-align:top;white-space:nowrap;"><span style="background:#e0e7ff;color:#3730a3;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;">W4</span></td>
@@ -1635,7 +1805,7 @@ function renderGlossary() {
   const typeStats = Object.entries(byType).map(([t,ps])=>({type:t,share:_allPosts.length?Math.round(ps.length/_allPosts.length*100):0})).sort((a,b)=>b.share-a.share);
   const dominant = typeStats[0];
 
-  setEl('dynamicSummary', `<strong>Ringkasan:</strong> Dari ${_allPosts.length} post historis, avg ER ~${overallER.toFixed(2)}% (${lb.txt}). ${dominant ? `Format dominan: ${dominant.share}% konten adalah ${dominant.type}.` : ''} Lihat tab Insights untuk rincian apa yang bekerja dan tidak.`);
+  setEl('dynamicSummary', `<strong>Ringkasan:</strong> Dari ${_allPosts.length} post historis, avg ER ~${overallER.toFixed(2)}% (${lb.txt}). ${dominant ? `Format dominan: ${dominant.share}% konten adalah ${typeLabel(dominant.type)}.` : ''} Lihat tab Insights untuk rincian apa yang bekerja dan tidak.`);
 }
 
 function switchInsightTab(name,btn) {
